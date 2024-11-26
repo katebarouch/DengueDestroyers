@@ -36,6 +36,7 @@ fi
 
 ### Download and Process the Reference Genome ###
 echo "Downloading Dengue genome (reference genome)..."
+# Less Sensitive (resistance) to JNJ A07 and mosnodenvir
 wget -q "https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/862/125/GCF_000862125.1_ViralProj15306/GCF_000862125.1_ViralProj15306_genomic.fna.gz" -O $WORKDIR/genome.fna.gz
 check_error
 
@@ -90,14 +91,15 @@ check_error
 
 echo "Downloading comparison genomes for alignment..."
 
-# dengue virus 1
+# dengue virus 1 - sensitive to mosnodenvir
 wget "https://www.ncbi.nlm.nih.gov/sviewer/viewer.fcgi?id=OR486055.1&report=fasta&format=text" -O dengue_virus1.fa
 check_error 
-# dengue virus 2
+# dengue virus 2 - this is too different
 wget "https://www.ncbi.nlm.nih.gov/sviewer/viewer.fcgi?id=OR771147.1&report=fasta&format=text" -O dengue_virus2.fa
 check_error 
-#dengue virus 3
+#dengue virus 3 - this is too different
 wget "https://www.ncbi.nlm.nih.gov/sviewer/viewer.fcgi?id=OQ821525&report=fasta&format=text" -O dengue_virus3.fa
+check_error
 
 # Aligning Dengue Virus 1
 echo "Aligning Dengue Virus 1 to reference genome using Bowtie2..."
