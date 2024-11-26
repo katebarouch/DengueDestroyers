@@ -88,28 +88,78 @@ echo "Preparing reference genome..."
 bowtie2-build $WORKDIR/viral_genome.fa $WORKDIR/viral_genome
 check_error
 
-echo "Downloading and decompressing comparison genome..."
+echo "Downloading comparison genomes for alignment..."
+
+# dengue virus 1
 wget "https://www.ncbi.nlm.nih.gov/sviewer/viewer.fcgi?id=OR486055.1&report=fasta&format=text" -O dengue_virus1.fa
 check_error 
+# dengue virus 2
+wget "https://www.ncbi.nlm.nih.gov/sviewer/viewer.fcgi?id=OR771147.1&report=fasta&format=text" -O dengue_virus2.fa
+check_error 
+#dengue virus 3
+wget "https://www.ncbi.nlm.nih.gov/sviewer/viewer.fcgi?id=OQ821525&report=fasta&format=text" -O dengue_virus3.fa
 
-echo "Aligning comparison genome to reference genome using Bowtie2..."
+# Aligning Dengue Virus 1
+echo "Aligning Dengue Virus 1 to reference genome using Bowtie2..."
 bowtie2 -x $WORKDIR/viral_genome -f $WORKDIR/dengue_virus1.fa -S $WORKDIR/comparison_genome.sam
 check_error 
 
-echo "Converting SAM file to BAM file..."
+echo "Converting Dengue Virus 1 SAM file to BAM file..."
 samtools view -bS $WORKDIR/comparison_genome.sam > $WORKDIR/comparison_genome.bam
 check_error 
 
-echo "Sorting BAM file..."
+echo "Sorting Dengue Virus 1 BAM file..."
 samtools sort $WORKDIR/comparison_genome.bam -o $WORKDIR/comparison_genome.sorted.bam
 check_error 
 
-echo "Indexing BAM file..."
+echo "Indexing Dengue Virus 1 BAM file..."
 samtools index $WORKDIR/comparison_genome.sorted.bam
 check_error 
 
-echo "Adding alignment track to JBrowse..."
+echo "Adding Dengue Virus 1 alignment track to JBrowse..."
 jbrowse add-track $WORKDIR/comparison_genome.sorted.bam --out $APACHE_ROOT/jbrowse2 --load copy
 check_error 
 
-echo "Comparison genome alignment successfully added to JBrowse."
+# Aligning Dengue Virus 2
+echo "Aligning Dengue Virus 2 to reference genome using Bowtie2..."
+bowtie2 -x $WORKDIR/viral_genome -f $WORKDIR/dengue_virus2.fa -S $WORKDIR/dengue_virus2.sam
+check_error
+
+echo "Converting Dengue Virus 2 SAM file to BAM file..."
+samtools view -bS $WORKDIR/dengue_virus2.sam > $WORKDIR/dengue_virus2.bam
+check_error
+
+echo "Sorting Dengue Virus 2 BAM file..."
+samtools sort $WORKDIR/dengue_virus2.bam -o $WORKDIR/dengue_virus2.sorted.bam
+check_error
+
+echo "Indexing Dengue Virus 2 BAM file..."
+samtools index $WORKDIR/dengue_virus2.sorted.bam
+check_error
+
+echo "Adding Dengue Virus 2 alignment track to JBrowse..."
+jbrowse add-track $WORKDIR/dengue_virus2.sorted.bam --out $APACHE_ROOT/jbrowse2 --load copy
+check_error
+
+# Aligning Dengue Virus 3
+echo "Aligning Dengue Virus 3 to reference genome using Bowtie2..."
+bowtie2 -x $WORKDIR/viral_genome -f $WORKDIR/dengue_virus3.fa -S $WORKDIR/dengue_virus3.sam
+check_error
+
+echo "Converting Dengue Virus 3 SAM file to BAM file..."
+samtools view -bS $WORKDIR/dengue_virus3.sam > $WORKDIR/dengue_virus3.bam
+check_error
+
+echo "Sorting Dengue Virus 3 BAM file..."
+samtools sort $WORKDIR/dengue_virus3.bam -o $WORKDIR/dengue_virus3.sorted.bam
+check_error
+
+echo "Indexing Dengue Virus 3 BAM file..."
+samtools index $WORKDIR/dengue_virus3.sorted.bam
+check_error
+
+echo "Adding Dengue Virus 3 alignment track to JBrowse..."
+jbrowse add-track $WORKDIR/dengue_virus3.sorted.bam --out $APACHE_ROOT/jbrowse2 --load copy
+check_error
+
+echo "All comparison genomes successfully aligned and added to JBrowse."
