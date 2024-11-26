@@ -1,5 +1,5 @@
 # The Flavi Fighters
-## BioE231 Final Project by Kate Barouch, Smrithi Surender, & Marriëtte Peutz
+## BioE231 Final Project
 
 This project provides a customizable database installer for JBrowse2, focused on the Flavivirus family, to support pandemic researchers by integrating genome alignments, annotations, and bioinformatics tools for rapid pathogen identification and evolutionary analysis.
 
@@ -110,17 +110,6 @@ A widespread virus transmitted by Culex mosquitoes, with severe neurological com
 
 
 ---
-
-## **Collaborator Contributions**
-
-### **Kate Barouch**:
-- 
-
-### **Smrithi Surender**:
-- 
-
-### **Marriëtte Peutz**:
-- 
 
 
 - 
