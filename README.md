@@ -1,7 +1,7 @@
 # The Flavi Fighters
 ## BioE231 Final Project
 
-This project provides a customizable database installer for JBrowse2, focused on the Flavivirus family, to support pandemic researchers by integrating genome alignments, annotations, and bioinformatics tools for rapid pathogen identification and evolutionary analysis.
+This project provides a customizable database installer for JBrowse2, focused on the Flavivirus family, to support pandemic researchers by integrating genome alignments and annotations for evolutionary analysis.
 
 ## **Table of Contents**
 1. [Instructions for Running the Script](#instructions-for-running-the-script)
