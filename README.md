@@ -6,7 +6,7 @@ This project provides a customizable database installer for JBrowse2, focused on
 1. [Instructions for Running the Script](#instructions-for-running-the-script)
 2. [Dengue Virus Background Information](#Dengue-Virus(DENV))
 3. [Data Sources](#data-sources)
-4. [Usage Guide](#usage-guide)
+4. [JBrowse Usage Guide](#Jrowse-usage-guide)
 5. [Collaborator Contributions](#collaborator-contributions)
 
 ---
@@ -74,7 +74,7 @@ An increasing and major global health threat, with over 6,800 cases reported in 
 
 ---
 
-## **Data Sources**
+## Data Sources
 
 ### **External Data Sources**:
 - Genome sequences and annotations were retrieved from the NCBI FTP repository.
@@ -88,7 +88,7 @@ An increasing and major global health threat, with over 6,800 cases reported in 
 
 ---
 
-## **Usage Guide**
+## JBrowse Usage Guide
 
 ### **Navigating JBrowse2**
 - **Reading Frames**: Explore six reading frames (three forward and three reverse).
@@ -96,6 +96,10 @@ An increasing and major global health threat, with over 6,800 cases reported in 
 - **Alignment Tracks**: Analyze alignment tracks for insights into different viral strains.
 
 ### **Customizing Data Views**
+
+## Collaborator Contributions
+
+
 
 
 ---
