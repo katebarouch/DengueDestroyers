@@ -101,7 +101,7 @@ wget "https://www.ncbi.nlm.nih.gov/sviewer/viewer.fcgi?id=OQ821525&report=fasta&
 
 # Aligning Dengue Virus 1
 echo "Aligning Dengue Virus 1 to reference genome using Bowtie2..."
-bowtie2 -x $WORKDIR/viral_genome -f $WORKDIR/dengue_virus1.fa -S $WORKDIR/dengue_virus1.sam --very-sensitive --score-min L,-0.6,-0.4
+bowtie2 -x $WORKDIR/viral_genome -f $WORKDIR/dengue_virus1.fa -S $WORKDIR/dengue_virus1.sam 
 check_error 
 
 echo "Converting Dengue Virus 1 SAM file to BAM file..."
@@ -122,7 +122,7 @@ check_error
 
 # Aligning Dengue Virus 2
 echo "Aligning Dengue Virus 2 to reference genome using Bowtie2..."
-bowtie2 -x $WORKDIR/viral_genome -f $WORKDIR/dengue_virus2.fa -S $WORKDIR/dengue_virus2.sam --very-sensitive --score-min L,-0.6,-0.4
+bowtie2 -x $WORKDIR/viral_genome -f $WORKDIR/dengue_virus2.fa -S $WORKDIR/dengue_virus2.sam 
 check_error
 
 echo "Converting Dengue Virus 2 SAM file to BAM file..."
@@ -143,7 +143,7 @@ check_error
 
 # Aligning Dengue Virus 3
 echo "Aligning Dengue Virus 3 to reference genome using Bowtie2..."
-bowtie2 -x $WORKDIR/viral_genome -f $WORKDIR/dengue_virus3.fa -S $WORKDIR/dengue_virus3.sam --very-sensitive --score-min L,-0.6,-0.4
+bowtie2 -x $WORKDIR/viral_genome -f $WORKDIR/dengue_virus3.fa -S $WORKDIR/dengue_virus3.sam 
 check_error
 
 echo "Converting Dengue Virus 3 SAM file to BAM file..."
