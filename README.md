@@ -97,6 +97,8 @@ An increasing and major global health threat, with over 6,800 cases reported in 
 
 ### **Customizing Data Views**
 
+---
+
 ## Collaborator Contributions
 - Smrithi Surender: Led the main data sourcing efforts, conducted literature reviews, and provided assistance with code development and testing.
 
@@ -104,10 +106,6 @@ An increasing and major global health threat, with over 6,800 cases reported in 
   
 - Mariette Peutz: Assisted with literature review, contributed to defining code requirements, and provided assistance with code development and testing.
 
-
-
-
 ---
 
 
-- 
