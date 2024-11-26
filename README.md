@@ -1,6 +1,6 @@
 # The Flavi Fighters
 
-This project provides a customizable database installer for JBrowse2, focused on the Flavivirus family, to support pandemic researchers by integrating genome alignments and annotations for evolutionary analysis.
+This project provides a customizable database installer for JBrowse2, focused on the Dengue virus, to support pandemic researchers by integrating genome alignments and annotations for evolutionary analysis.
 
 ## **Table of Contents**
 1. [Instructions for Running the Script](#instructions-for-running-the-script)
@@ -68,18 +68,9 @@ This project provides a customizable database installer for JBrowse2, focused on
 
 ---
 
-## Flavivirus Family
+## Dengue Virus(DENV)
 
-We chose to focus on the Flavivirus family due to the increasing global health threats posed by this virus family with climate warming expanding mosquito habitats and contributing to outbreaks in new regions.
-
-### Dengue Virus (DENV): 
-A major global health threat, with over 6,800 cases reported in the United States as of October 31, 2024—more than double the cases reported in 2023—driven by climate change and increasing prevalence in the Americas and Asia.
-
-### Zika Virus (ZIKV): 
-Recognized for causing severe congenital outcomes like microcephaly, it is included on the WHO priority list for diseases with epidemic potential, and there is currently no vaccine available.
-
-### West Nile Virus (WNV): 
-A widespread virus transmitted by Culex mosquitoes, with severe neurological complications in some cases, and no available vaccine, underscoring the importance of further research.
+An increasing and major global health threat, with over 6,800 cases reported in the United States as of October 31, 2024—more than double the cases reported in 2023—driven by climate change expanding mosquito habitats and contributing to outbreaks in new regions, specifically in the Americas and Asia.
 
 ---
 
@@ -87,7 +78,7 @@ A widespread virus transmitted by Culex mosquitoes, with severe neurological com
 
 ### **External Data Sources**:
 - Genome sequences and annotations were retrieved from the NCBI FTP repository.
-- Specific data includes genomic FASTA files and GFF annotation files for Dengue, Zika, and West Nile viruses.
+- Specific data includes genomic FASTA files and GFF annotation files for Dengue.
 
 #### **Example Links**:
 - **Dengue**: [NCBI Genome Reference](https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/862/125/GCF_000862125.1_ViralProj15306/)
