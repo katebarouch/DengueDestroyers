@@ -95,7 +95,6 @@ A widespread virus transmitted by Culex mosquitoes, with severe neurological com
 
 ### **Self-Generated Data**:
 - Alignments between reference and comparison genomes.
-- Custom annotations generated using JBrowse2 tools.
 
 ---
 
