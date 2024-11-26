@@ -6,7 +6,7 @@ This project provides a customizable database installer for JBrowse2, focused on
 1. [Instructions for Running the Script](#instructions-for-running-the-script)
 2. [Dengue Virus Background Information](#Dengue-Virus(DENV))
 3. [Data Sources](#data-sources)
-4. [JBrowse Usage Guide](#Jrowse-usage-guide)
+4. [JBrowse Usage Guide](#JBrowse-usage-guide)
 5. [Collaborator Contributions](#collaborator-contributions)
 
 ---
