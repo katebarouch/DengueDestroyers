@@ -15,7 +15,7 @@ This project provides a customizable database installer for JBrowse2, focused on
 
 1. Clone the repository containing the script:
    
-        git clone https://github.com/mariettepeutz/bioe231fp.git](https://github.com/katebarouch/FlaviFighters.git
+        git clone https://github.com/katebarouch/FlaviFighters.git
 
 2. Move into the repository directory:
 
