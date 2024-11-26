@@ -1,5 +1,4 @@
 # The Flavi Fighters
-## BioE231 Final Project
 
 This project provides a customizable database installer for JBrowse2, focused on the Flavivirus family, to support pandemic researchers by integrating genome alignments and annotations for evolutionary analysis.
 
@@ -16,11 +15,11 @@ This project provides a customizable database installer for JBrowse2, focused on
 
 1. Clone the repository containing the script:
    
-        git clone https://github.com/mariettepeutz/bioe231fp.git
+        git clone https://github.com/mariettepeutz/bioe231fp.git](https://github.com/katebarouch/FlaviFighters.git
 
 2. Move into the repository directory:
 
-        cd bioe231fp
+        cd FlaviFighters
    
 4. Install all necessary dependencies:
    Based on your operating system, run the appropriate command to install wget, samtools, bowtie2, jbrowse, and other essential tools:
