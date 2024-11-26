@@ -1,4 +1,4 @@
-# The Flavi Fighters
+# The Dengue Destroyers
 
 This project provides a customizable database installer for JBrowse2, focused on the Dengue virus, to support pandemic researchers by integrating genome alignments and annotations for evolutionary analysis.
 
