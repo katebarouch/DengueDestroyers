@@ -98,9 +98,11 @@ An increasing and major global health threat, with over 6,800 cases reported in 
 ### **Customizing Data Views**
 
 ## Collaborator Contributions
--Smrithi Surender: Led the main data sourcing efforts, conducted literature reviews, and provided assistance with code development and testing.
-Kate Barouch: Led the main coding efforts, contributed to rigorous testing and debugging, reviewed code documentation for JBrowse, and provided support with literature review.
-Mariette Peutz: Assisted with literature review, contributed to defining code requirements, and provided assistance with code development and testing.
+- Smrithi Surender: Led the main data sourcing efforts, conducted literature reviews, and provided assistance with code development and testing.
+
+- Kate Barouch: Led the main coding efforts, contributed to rigorous testing and debugging, reviewed code documentation for JBrowse, and provided support with literature review.
+  
+- Mariette Peutz: Assisted with literature review, contributed to defining code requirements, and provided assistance with code development and testing.
 
 
 
