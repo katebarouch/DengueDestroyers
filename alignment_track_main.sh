@@ -61,12 +61,15 @@ for virus in DENV-1 DENV-2 DENV-3 DENV-4; do
   wget -q "${genome_urls[$virus]}" -O "$WORKDIR/${virus}_genome.fna.gz"
   check_error
 
+  echo "Unzipping $virus reference genome..."
   gunzip -f "$WORKDIR/${virus}_genome.fna.gz"
   check_error
 
+  echo "Indexing $virus reference genome..."
   samtools faidx "$WORKDIR/${virus}_genome.fna"
   check_error
-
+  
+  echo "Adding $virus reference genome to JBrowse..."
   jbrowse add-assembly "$WORKDIR/${virus}_genome.fna" --out "$APACHE_ROOT/jbrowse2" --load copy
   check_error
 
@@ -75,18 +78,23 @@ for virus in DENV-1 DENV-2 DENV-3 DENV-4; do
   wget -q "${annotation_urls[$virus]}" -O "$WORKDIR/${virus}_annotations.gff.gz"
   check_error
 
+  echo "Unzipping $virus annotations..."
   gunzip -f "$WORKDIR/${virus}_annotations.gff.gz"
   check_error
 
+  echo "Sorting $virus annotations..."
   jbrowse sort-gff "$WORKDIR/${virus}_annotations.gff" > "$WORKDIR/${virus}_genes.gff"
   check_error
 
+  echo "Compressing $virus annotations..."
   bgzip -f "$WORKDIR/${virus}_genes.gff"
   check_error
 
+  echo "? $virus annotations..."
   tabix "$WORKDIR/${virus}_genes.gff.gz"
   check_error
 
+  echo "Adding $virus annotations to JBrowse..."
   jbrowse add-track "$WORKDIR/${virus}_genes.gff.gz" --out "$APACHE_ROOT/jbrowse2" --load copy
   check_error
 
