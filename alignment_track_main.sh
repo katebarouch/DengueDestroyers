@@ -36,23 +36,23 @@ fi
 # Define URLs for reference genomes
 declare -A genome_urls # -A is for Associative (aka string array)
 genome_urls["DENV-1"]="https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/862/125/GCF_000862125.1_ViralProj15306/GCF_000862125.1_ViralProj15306_genomic.fna.gz"
-genome_urls["DENV-2"]="..."
-genome_urls["DENV-3"]="..."
+genome_urls["DENV-2"]="https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/871/845/GCF_000871845.1_ViralProj20183/GCF_000871845.1_ViralProj20183_genomic.fna.gz"
+genome_urls["DENV-3"]="https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/004/788/295/GCF_004788295.1_ASM478829v1/GCF_004788295.1_ASM478829v1_genomic.fna.gz"
 genome_urls["DENV-4"]="..."
 
 # Define URLs for reference annotations
 declare -A annotation_urls
 annotation_urls["DENV-1"]="https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/862/125/GCF_000862125.1_ViralProj15306/GCF_000862125.1_ViralProj15306_genomic.gff.gz"
-annotation_urls["DENV-2"]="..."
-annotation_urls["DENV-3"]="..."
+annotation_urls["DENV-2"]="https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/871/845/GCF_000871845.1_ViralProj20183/GCF_000871845.1_ViralProj20183_genomic.gff.gz"
+annotation_urls["DENV-3"]="https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/004/788/295/GCF_004788295.1_ASM478829v1/GCF_004788295.1_ASM478829v1_genomic.gff.gz"
 annotation_urls["DENV-4"]="..."
 
 # Define URLs and JBrowse names for comparison genomes (all 3 entries for each serotype are stored in single string for simplicity)
 declare -A comparison_genomes
-comparison_genomes["DENV-1"]="https://example.com/DENV_1_comparison1.fa,SampleA https://example.com/DENV_1_comparison2.fa,SampleB https://example.com/DENV_1_comparison3.fa,SampleC"
-comparison_genomes["DENV-2"]="https://example.com/DENV_2_comparison1.fa,IsolateX https://example.com/DENV_2_comparison2.fa,IsolateY https://example.com/DENV_2_comparison3.fa,IsolateZ"
+comparison_genomes["DENV-1"]="https://example.com/DENV_1_comparison1.fa,Variant1 https://example.com/DENV_1_comparison2.fa,Variant2 https://example.com/DENV_1_comparison3.fa,Variant3"
+comparison_genomes["DENV-2"]="https://example.com/DENV_2_comparison1.fa,Variant1 https://example.com/DENV_2_comparison2.fa,Variant2 https://example.com/DENV_2_comparison3.fa,Variant3"
 comparison_genomes["DENV-3"]="https://example.com/DENV_3_comparison1.fa,Variant1 https://example.com/DENV_3_comparison2.fa,Variant2 https://example.com/DENV_3_comparison3.fa,Variant3"
-comparison_genomes["DENV-4"]="https://example.com/DENV_4_comparison1.fa,StrainAlpha https://example.com/DENV_4_comparison2.fa,StrainBeta https://example.com/DENV_4_comparison3.fa,StrainGamma"
+comparison_genomes["DENV-4"]="https://example.com/DENV_4_comparison1.fa,Variant1 https://example.com/DENV_4_comparison2.fa,Variant2 https://example.com/DENV_4_comparison3.fa,Variant3"
 
 # Loop over each reference genome and its corresponding annotations
 for virus in DENV-1 DENV-2 DENV-3 DENV-4; do
