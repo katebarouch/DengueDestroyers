@@ -31,109 +31,147 @@ if [ ! -d "$APACHE_ROOT/jbrowse2" ]; then
     exit 1
 fi
 
-### Download and Process the Reference Genomes for all serotypes ###
-
-# Define URLs for reference genomes
-declare -A genome_urls # -A is for Associative (aka string array)
-genome_urls["DENV-1"]="https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/862/125/GCF_000862125.1_ViralProj15306/GCF_000862125.1_ViralProj15306_genomic.fna.gz"
-genome_urls["DENV-2"]="https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/871/845/GCF_000871845.1_ViralProj20183/GCF_000871845.1_ViralProj20183_genomic.fna.gz"
-genome_urls["DENV-3"]="https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/004/788/295/GCF_004788295.1_ASM478829v1/GCF_004788295.1_ASM478829v1_genomic.fna.gz"
-genome_urls["DENV-4"]="..."
-
-# Define URLs for reference annotations
-declare -A annotation_urls
-annotation_urls["DENV-1"]="https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/862/125/GCF_000862125.1_ViralProj15306/GCF_000862125.1_ViralProj15306_genomic.gff.gz"
-annotation_urls["DENV-2"]="https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/871/845/GCF_000871845.1_ViralProj20183/GCF_000871845.1_ViralProj20183_genomic.gff.gz"
-annotation_urls["DENV-3"]="https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/004/788/295/GCF_004788295.1_ASM478829v1/GCF_004788295.1_ASM478829v1_genomic.gff.gz"
-annotation_urls["DENV-4"]="..."
-
-# Define URLs and JBrowse names for comparison genomes (all 3 entries for each serotype are stored in single string for simplicity)
-declare -A comparison_genomes
-comparison_genomes["DENV-1"]="https://example.com/DENV_1_comparison1.fa,Variant1 https://example.com/DENV_1_comparison2.fa,Variant2 https://example.com/DENV_1_comparison3.fa,Variant3"
-comparison_genomes["DENV-2"]="https://example.com/DENV_2_comparison1.fa,Variant1 https://example.com/DENV_2_comparison2.fa,Variant2 https://example.com/DENV_2_comparison3.fa,Variant3"
-comparison_genomes["DENV-3"]="https://example.com/DENV_3_comparison1.fa,Variant1 https://example.com/DENV_3_comparison2.fa,Variant2 https://example.com/DENV_3_comparison3.fa,Variant3"
-comparison_genomes["DENV-4"]="https://example.com/DENV_4_comparison1.fa,Variant1 https://example.com/DENV_4_comparison2.fa,Variant2 https://example.com/DENV_4_comparison3.fa,Variant3"
-
-# Loop over each reference genome and its corresponding annotations
-for virus in DENV-1 DENV-2 DENV-3 DENV-4; do
-  # Process reference genome
-  echo "Processing $virus reference genome..."
-  wget -q "${genome_urls[$virus]}" -O "$WORKDIR/${virus}_genome.fna.gz"
-  check_error
-
-  echo "Unzipping $virus reference genome..."
-  gunzip -f "$WORKDIR/${virus}_genome.fna.gz"
-  check_error
-
-  echo "Indexing $virus reference genome..."
-  samtools faidx "$WORKDIR/${virus}_genome.fna"
-  check_error
-  
-  echo "Adding $virus reference genome to JBrowse..."
-  jbrowse add-assembly "$WORKDIR/${virus}_genome.fna" --out "$APACHE_ROOT/jbrowse2" --load copy
-  check_error
-
-  # Process reference annotations
-  echo "Processing $virus annotations..."
-  wget -q "${annotation_urls[$virus]}" -O "$WORKDIR/${virus}_annotations.gff.gz"
-  check_error
-
-  echo "Unzipping $virus annotations..."
-  gunzip -f "$WORKDIR/${virus}_annotations.gff.gz"
-  check_error
-
-  echo "Sorting $virus annotations..."
-  jbrowse sort-gff "$WORKDIR/${virus}_annotations.gff" > "$WORKDIR/${virus}_genes.gff"
-  check_error
-
-  echo "Compressing $virus annotations..."
-  bgzip -f "$WORKDIR/${virus}_genes.gff"
-  check_error
-
-  echo "Indexing $virus annotations..."
-  tabix "$WORKDIR/${virus}_genes.gff.gz"
-  check_error
-
-  echo "Adding $virus annotations to JBrowse..."
-  jbrowse add-track "$WORKDIR/${virus}_genes.gff.gz" --out "$APACHE_ROOT/jbrowse2" --load copy
-  check_error
-
-  echo "$virus genome and annotations successfully added to JBrowse."
-
-  # Align comparison genomes
-  echo "Building Bowtie2 index for $virus reference genome..."
-  bowtie2-build "$WORKDIR/${virus}_genome.fna" "$WORKDIR/${virus}_genome_index"
-  check_error
-
-  # Process each comparison genome
-  echo "Processing comparison genomes for $virus..."
-  for comparison_entry in $(echo "${comparison_genomes[$virus]}"); do
-    comparison_url=$(echo "$comparison_entry" | cut -d',' -f1)
-    jbrowse_name=$(echo "$comparison_entry" | cut -d',' -f2)
-
-    echo "Downloading $jbrowse_name for $virus..."
-    wget -q "$comparison_url" -O "$WORKDIR/${jbrowse_name}.fa"
+# Function to process a reference genome
+process_reference_genome() {
+    virus_name="$1"
+    genome_url="$2"
+    echo "Processing $virus_name reference genome..."
+    wget -q "$genome_url" -O "$WORKDIR/${virus_name}_genome.fna.gz"
     check_error
 
-    echo "Aligning $jbrowse_name to $virus reference genome..."
-    bowtie2 -x "$WORKDIR/${virus}_genome_index" -f "$WORKDIR/${jbrowse_name}.fa" -S "$WORKDIR/${jbrowse_name}.sam"
+    echo "Unzipping $virus_name reference genome..."
+    gunzip -f "$WORKDIR/${virus_name}_genome.fna.gz"
     check_error
 
-    echo "Converting $jbrowse_name alignment to BAM format..."
-    samtools view -bS "$WORKDIR/${jbrowse_name}.sam" > "$WORKDIR/${jbrowse_name}.bam"
+    echo "Indexing $virus_name reference genome..."
+    samtools faidx "$WORKDIR/${virus_name}_genome.fna"
     check_error
 
-    echo "Sorting $jbrowse_name BAM file..."
-    samtools sort "$WORKDIR/${jbrowse_name}.bam" -o "$WORKDIR/${jbrowse_name}.sorted.bam"
+    echo "Adding $virus_name reference genome to JBrowse..."
+    jbrowse add-assembly "$WORKDIR/${virus_name}_genome.fna" --out "$APACHE_ROOT/jbrowse2" --load copy
+    check_error
+}
+
+# Function to process a reference annotation
+process_reference_annotation() {
+    virus_name="$1"
+    annotation_url="$2"
+    echo "Processing $virus_name annotations..."
+    wget -q "$annotation_url" -O "$WORKDIR/${virus_name}_annotations.gff.gz"
     check_error
 
-    echo "Indexing $jbrowse_name sorted BAM file..."
-    samtools index "$WORKDIR/${jbrowse_name}.sorted.bam"
+    echo "Unzipping $virus_name annotations..."
+    gunzip -f "$WORKDIR/${virus_name}_annotations.gff.gz"
     check_error
 
-    echo "Adding $jbrowse_name alignment track to JBrowse..."
-    jbrowse add-track "$WORKDIR/${jbrowse_name}.sorted.bam" --out "$APACHE_ROOT/jbrowse2" --load copy --name "$jbrowse_name"
+    echo "Sorting $virus_name annotations..."
+    jbrowse sort-gff "$WORKDIR/${virus_name}_annotations.gff" > "$WORKDIR/${virus_name}_genes.gff"
     check_error
-  done
-  echo "All comparison genomes for $virus successfully aligned and added to JBrowse."
-done
+
+    echo "Compressing $virus_name annotations..."
+    bgzip -f "$WORKDIR/${virus_name}_genes.gff"
+    check_error
+
+    echo "Indexing $virus_name annotations..."
+    tabix "$WORKDIR/${virus_name}_genes.gff.gz"
+    check_error
+
+    echo "Adding $virus_name annotations to JBrowse..."
+    jbrowse add-track "$WORKDIR/${virus_name}_genes.gff.gz" --out "$APACHE_ROOT/jbrowse2" --load copy
+    check_error
+}
+
+# Function to process comparison genome for alignment track
+process_comparison_genome() {
+    reference_virus_name="$1"
+    comparison_virus_name="$2"
+    comparison_genome_url="$3"
+
+    echo "Building Bowtie2 index for $reference_virus_name genome..."
+    bowtie2-build "$WORKDIR/${reference_virus_name}_genome.fna" "$WORKDIR/${reference_virus_name}_genome_index"
+    check_error
+
+    echo "Downloading $comparison_virus_name..."
+    wget -q "$comparison_genome_url" -O "$WORKDIR/${comparison_virus_name}.fa"
+    check_error
+
+    echo "Aligning $comparison_virus_name to $reference_virus_name reference genome..."
+    bowtie2 -x "$WORKDIR/${reference_virus_name}_genome_index" -f "$WORKDIR/${comparison_virus_name}.fa" -S "$WORKDIR/${comparison_virus_name}.sam"
+    check_error
+
+    echo "Converting $comparison_virus_name alignment to BAM format..."
+    samtools view -bS "$WORKDIR/${comparison_virus_name}.sam" > "$WORKDIR/${comparison_virus_name}.bam"
+    check_error
+
+    echo "Sorting $comparison_virus_name BAM file..."
+    samtools sort "$WORKDIR/${comparison_virus_name}.bam" -o "$WORKDIR/${comparison_virus_name}.sorted.bam"
+    check_error
+
+    echo "Indexing $comparison_virus_name sorted BAM file..."
+    samtools index "$WORKDIR/${comparison_virus_name}.sorted.bam"
+    check_error
+
+    echo "Adding $comparison_virus_name alignment track to JBrowse..."
+    jbrowse add-track "$WORKDIR/${comparison_virus_name}.sorted.bam" --out "$APACHE_ROOT/jbrowse2" --load copy --name "$comparison_virus_name"
+    check_error
+}
+
+### Main Script Execution ###
+
+# Process DENV-1 Genomes
+process_reference_genome "DENV-1" "https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/862/125/GCF_000862125.1_ViralProj15306/GCF_000862125.1_ViralProj15306_genomic.fna.gz"
+process_reference_annotation "DENV-1" "https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/862/125/GCF_000862125.1_ViralProj15306/GCF_000862125.1_ViralProj15306_genomic.gff.gz"
+
+process_comparison_genome "DENV-1" \
+    "https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/862/125/GCF_000862125.1_ViralProj15306/GCF_000862125.1_ViralProj15306_genomic.fna.gz" \
+    "Variant1" "https://example.com/DENV_1_comparison1.fa"
+process_comparison_genome "DENV-1" \
+    "https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/862/125/GCF_000862125.1_ViralProj15306/GCF_000862125.1_ViralProj15306_genomic.fna.gz" \
+    "Variant2" "https://example.com/DENV_1_comparison2.fa"
+process_comparison_genome "DENV-1" \
+    "https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/862/125/GCF_000862125.1_ViralProj15306/GCF_000862125.1_ViralProj15306_genomic.fna.gz" \
+    "Variant3" "https://example.com/DENV_1_comparison3.fa"
+
+# Process DENV-2 Genomes
+process_reference_genome "DENV-2" "https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/871/845/GCF_000871845.1_ViralProj20183/GCF_000871845.1_ViralProj20183_genomic.fna.gz"
+process_reference_annotation "DENV-2" "https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/871/845/GCF_000871845.1_ViralProj20183/GCF_000871845.1_ViralProj20183_genomic.gff.gz"
+
+process_comparison_genome "DENV-2" \
+    "https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/871/845/GCF_000871845.1_ViralProj20183/GCF_000871845.1_ViralProj20183_genomic.fna.gz" \
+    "Variant1" "https://example.com/DENV_2_comparison1.fa"
+process_comparison_genome "DENV-2" \
+    "https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/871/845/GCF_000871845.1_ViralProj20183/GCF_000871845.1_ViralProj20183_genomic.fna.gz" \
+    "Variant2" "https://example.com/DENV_2_comparison2.fa"
+process_comparison_genome "DENV-2" \
+    "https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/871/845/GCF_000871845.1_ViralProj20183/GCF_000871845.1_ViralProj20183_genomic.fna.gz" \
+    "Variant3" "https://example.com/DENV_2_comparison3.fa"
+
+# Process DENV-3 Genomes
+process_reference_genome "DENV-3" "https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/004/788/295/GCF_004788295.1_ASM478829v1/GCF_004788295.1_ASM478829v1_genomic.fna.gz"
+process_reference_annotation "DENV-3" "https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/004/788/295/GCF_004788295.1_ASM478829v1/GCF_004788295.1_ASM478829v1_genomic.gff.gz"
+
+process_comparison_genome "DENV-3" \
+    "https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/004/788/295/GCF_004788295.1_ASM478829v1/GCF_004788295.1_ASM478829v1_genomic.fna.gz" \
+    "Variant1" "https://example.com/DENV_3_comparison1.fa"
+process_comparison_genome "DENV-3" \
+    "https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/004/788/295/GCF_004788295.1_ASM478829v1/GCF_004788295.1_ASM478829v1_genomic.fna.gz" \
+    "Variant2" "https://example.com/DENV_3_comparison2.fa"
+process_comparison_genome "DENV-3" \
+    "https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/004/788/295/GCF_004788295.1_ASM478829v1/GCF_004788295.1_ASM478829v1_genomic.fna.gz" \
+    "Variant3" "https://example.com/DENV_3_comparison3.fa"
+
+# Process DENV-4 Genomes
+process_reference_genome "DENV-4" "https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/004/788/295/GCF_004788296.1_ASM478830v1/GCF_004788296.1_ASM478830v1_genomic.fna.gz"
+process_reference_annotation "DENV-4" "https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/004/788/295/GCF_004788296.1_ASM478830v1/GCF_004788296.1_ASM478830v1_genomic.gff.gz"
+
+process_comparison_genome "DENV-4" \
+    "https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/004/788/295/GCF_004788296.1_ASM478830v1/GCF_004788296.1_ASM478830v1_genomic.fna.gz" \
+    "Variant1" "https://example.com/DENV_4_comparison1.fa"
+process_comparison_genome "DENV-4" \
+    "https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/004/788/295/GCF_004788296.1_ASM478830v1/GCF_004788296.1_ASM478830v1_genomic.fna.gz" \
+    "Variant2" "https://example.com/DENV_4_comparison2.fa"
+process_comparison_genome "DENV-4" \
+    "https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/004/788/295/GCF_004788296.1_ASM478830v1/GCF_004788296.1_ASM478830v1_genomic.fna.gz" \
+    "Variant3" "https://example.com/DENV_4_comparison3.fa"
+
+echo "All reference genomes, annotations, and comparison genomes have been processed and added to JBrowse."
