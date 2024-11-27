@@ -90,7 +90,7 @@ for virus in DENV-1 DENV-2 DENV-3 DENV-4; do
   bgzip -f "$WORKDIR/${virus}_genes.gff"
   check_error
 
-  echo "? $virus annotations..."
+  echo "Indexing $virus annotations..."
   tabix "$WORKDIR/${virus}_genes.gff.gz"
   check_error
 
@@ -101,11 +101,12 @@ for virus in DENV-1 DENV-2 DENV-3 DENV-4; do
   echo "$virus genome and annotations successfully added to JBrowse."
 
   # Align comparison genomes
-  echo "Aligning $virus comparison genomes..."
+  echo "Building Bowtie2 index for $virus reference genome..."
   bowtie2-build "$WORKDIR/${virus}_genome.fna" "$WORKDIR/${virus}_genome_index"
   check_error
 
   # Process each comparison genome
+  echo "Processing comparison genomes for $virus..."
   for comparison_entry in $(echo "${comparison_genomes[$virus]}"); do
     comparison_url=$(echo "$comparison_entry" | cut -d',' -f1)
     jbrowse_name=$(echo "$comparison_entry" | cut -d',' -f2)
@@ -118,19 +119,21 @@ for virus in DENV-1 DENV-2 DENV-3 DENV-4; do
     bowtie2 -x "$WORKDIR/${virus}_genome_index" -f "$WORKDIR/${jbrowse_name}.fa" -S "$WORKDIR/${jbrowse_name}.sam"
     check_error
 
+    echo "Converting $jbrowse_name alignment to BAM format..."
     samtools view -bS "$WORKDIR/${jbrowse_name}.sam" > "$WORKDIR/${jbrowse_name}.bam"
     check_error
 
+    echo "Sorting $jbrowse_name BAM file..."
     samtools sort "$WORKDIR/${jbrowse_name}.bam" -o "$WORKDIR/${jbrowse_name}.sorted.bam"
     check_error
 
+    echo "Indexing $jbrowse_name sorted BAM file..."
     samtools index "$WORKDIR/${jbrowse_name}.sorted.bam"
     check_error
 
+    echo "Adding $jbrowse_name alignment track to JBrowse..."
     jbrowse add-track "$WORKDIR/${jbrowse_name}.sorted.bam" --out "$APACHE_ROOT/jbrowse2" --load copy --name "$jbrowse_name"
     check_error
   done
-
   echo "All comparison genomes for $virus successfully aligned and added to JBrowse."
 done
-
