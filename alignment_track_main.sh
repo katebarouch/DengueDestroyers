@@ -1,5 +1,7 @@
 #!/bin/bash
 
+### Dengue Alignments Tracks ###
+
 # Helper function for error handling
 check_error() {
     if [ $? -ne 0 ]; then
