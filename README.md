@@ -15,11 +15,11 @@ This project provides a customizable database installer for JBrowse2, focused on
 
 1. Clone the repository containing the script:
    
-        git clone https://github.com/katebarouch/FlaviFighters.git
+        git clone https://github.com/katebarouch/DengueDestroyers.git
 
 2. Move into the repository directory:
 
-        cd FlaviFighters
+        cd DengueDestroyers
    
 4. Install all necessary dependencies:
    Based on your operating system, run the appropriate command to install wget, samtools, bowtie2, jbrowse, and other essential tools:
