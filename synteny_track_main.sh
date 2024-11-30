@@ -1,6 +1,6 @@
 #!/bin/bash
 
-### Dengue Alignments Tracks ###
+### Dengue Synteny Tracks ###
 
 # Helper function for error handling
 check_error() {
