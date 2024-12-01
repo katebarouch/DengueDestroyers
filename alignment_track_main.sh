@@ -46,7 +46,7 @@ process_reference_genome() {
     check_error
 
     echo "Adding $virus_name reference genome to JBrowse with assembly name: $assembly_name..."
-    jbrowse add-assembly "$WORKDIR/${virus_name}_genome.fasta" --out "$APACHE_ROOT/jbrowse2" --load copy --assemblyName "$assembly_name"
+    jbrowse add-assembly "$WORKDIR/${virus_name}_genome.fasta" --out "$APACHE_ROOT/jbrowse2" --load copy --name "$assembly_name"
     check_error
 }
 
