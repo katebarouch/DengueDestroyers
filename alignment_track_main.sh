@@ -133,9 +133,9 @@ process_reference_genome "DENV-2_Cosmopolitan" "https://www.ncbi.nlm.nih.gov/svi
 # process_reference_annotation "DENV-2, Cosmopolitan" "https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/871/845/GCF_000871845.1_ViralProj20183/GCF_000871845.1_ViralProj20183_genomic.gff.gz"
 
 process_comparison_genome "DENV-2_Cosmopolitan" \
-    "DENV-2_Malaysia" "https://example.com/DENV_2_comparison1.fa"
+    "DENV-2_Malaysia" "https://www.ncbi.nlm.nih.gov/sviewer/viewer.fcgi?id=PQ465587.1&report=fasta&format=text"
 process_comparison_genome "DENV-2_Cosmopolitan" \
-    "DENV-2_Brazil" "https://example.com/DENV_2_comparison2.fa"
+    "DENV-2_Brazil" "https://www.ncbi.nlm.nih.gov/sviewer/viewer.fcgi?id=PP546320.1&report=fasta&format=text"
 
 # Process DENV-3 Genomes
 process_reference_genome "DENV-3_Florida" "https://www.ncbi.nlm.nih.gov/sviewer/viewer.fcgi?id=OQ821613.1&report=fasta&format=text"
