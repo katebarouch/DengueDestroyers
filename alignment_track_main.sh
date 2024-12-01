@@ -40,9 +40,9 @@ process_reference_genome() {
     wget "$genome_url" -O "$WORKDIR/${virus_name}_genome.fna.gz"
     check_error
 
-    echo "Unzipping $virus_name genome...
+    echo "Unzipping $virus_name genome..."
     gunzip -f "$WORKDIR/${virus_name}_genome.fna.gz"
-    check error
+    check_error
 
     echo "Indexing $virus_name reference genome..."
     samtools faidx "$WORKDIR/${virus_name}_genome.fna"
@@ -54,7 +54,6 @@ process_reference_genome() {
 }
 
 # Function to process a reference annotation
-# needs to be fixed if we no longer recieve zipped files... also don't have links yet
 process_reference_annotation() {
     virus_name="$1"
     annotation_url="$2"
