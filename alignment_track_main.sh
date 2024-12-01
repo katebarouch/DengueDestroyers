@@ -130,8 +130,7 @@ process_comparison_genome "DENV-1" \
     "DENV-1_Guangzhou_China" "https://www.ncbi.nlm.nih.gov/sviewer/viewer.fcgi?id=PQ357572.1&report=fasta&format=text"
 
 # Process DENV-2 Genomes
-process_reference_genome "DENV-2" "https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/871/845/GCF_000871845.1_ViralProj20183/GCF_000871845.1_ViralProj20183_genomic.fna.gz
-" 
+process_reference_genome "DENV-2" "https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/871/845/GCF_000871845.1_ViralProj20183/GCF_000871845.1_ViralProj20183_genomic.fna.gz" 
 process_reference_annotation "DENV-2" "https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/871/845/GCF_000871845.1_ViralProj20183/GCF_000871845.1_ViralProj20183_genomic.gff.gz"
 
 process_comparison_genome "DENV-2" \
