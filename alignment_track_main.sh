@@ -151,18 +151,17 @@ process_comparison_genome "DENV-3" \
 process_comparison_genome "DENV-3" \
     "DENV-3_Senegal" "https://www.ncbi.nlm.nih.gov/sviewer/viewer.fcgi?id=MW288026.1&report=fasta&format=text" 
 
-# # Process DENV-4 Genomes
-# process_reference_genome "DENV-4" "https://www..."
-# process_reference_annotation "DENV-4" "https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/004/788/295/GCF_004788296.1_ASM478830v1/GCF_004788296.1_ASM478830v1_genomic.gff.gz"
+# Process DENV-4 Genomes
+process_reference_genome "DENV-4" "https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/004/786/575/GCF_004786575.1_ASM478657v1/GCF_004786575.1_ASM478657v1_genomic.fna.gz"
+process_reference_annotation "DENV-4" "https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/004/786/575/GCF_004786575.1_ASM478657v1/GCF_004786575.1_ASM478657v1_genomic.gff.gz"
 
-# process_comparison_genome "DENV-4" \
-#     "DENV-4_Indonesia" "https://www.ncbi.nlm.nih.gov/sviewer/viewer.fcgi?id=OL314742.1&report=fasta&format=tex" 
-# process_comparison_genome "DENV-4" \
-#     "DENV-4_Paraguay" "https://www.ncbi.nlm.nih.gov/sviewer/viewer.fcgi?id=OP811943.1&report=fasta&format=text" 
-# process_comparison_genome "DENV-4" \
-#     "DENV-4_Cambodia_2010" "https://www.ncbi.nlm.nih.gov/sviewer/viewer.fcgi?id=KF543272.1&report=fasta&format=text" 
-# process_comparison_genome "DENV-4" \
-#     "DENV-4_French_Polynesia_2009" "https://www.ncbi.nlm.nih.gov/sviewer/viewer.fcgi?id=JN832541.1&report=fasta&format=text" 
+process_comparison_genome "DENV-4" \
+    "DENV-4_Indonesia" "https://www.ncbi.nlm.nih.gov/sviewer/viewer.fcgi?id=OL314742.1&report=fasta&format=tex" 
+process_comparison_genome "DENV-4" \
+    "DENV-4_Paraguay" "https://www.ncbi.nlm.nih.gov/sviewer/viewer.fcgi?id=OP811943.1&report=fasta&format=text" 
+process_comparison_genome "DENV-4" \
+    "DENV-4_Cambodia_2010" "https://www.ncbi.nlm.nih.gov/sviewer/viewer.fcgi?id=KF543272.1&report=fasta&format=text" 
+process_comparison_genome "DENV-4" \
+    "DENV-4_French_Polynesia_2009" "https://www.ncbi.nlm.nih.gov/sviewer/viewer.fcgi?id=JN832541.1&report=fasta&format=text" 
     
-
 echo "All reference genomes, annotations, and comparison genomes have been processed and added to JBrowse."
