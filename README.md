@@ -56,11 +56,11 @@ This project provides a customizable database installer for JBrowse2, focused on
 
 9. Make the script executable:
 
-        chmod +x main.sh
+        chmod +x alignment_track_main.sh
 
 10. Run the script:
 
-        ./main.sh
+        ./alignment_track_main.sh
 
 11. Navigate again to your JBrowse installation to see your final visualization of the viral genomes:
 
